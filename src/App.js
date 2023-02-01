@@ -8,26 +8,26 @@ function App() {
   const [ampm, setAMPM] = useState(null)
 
   const updateTime = () => {
-    setHours(new Date().getHours());
+  }
+  setInterval(() => {
+    let hourInitial = new Date().getHours();
     setMinutes(new Date().getMinutes());
     setSeconds(new Date().getSeconds());
     setAMPM(hours >= 12 ? "PM" : "AM")
+
+    console.log(hours, minutes, seconds, ampm)
     //convert 24 hour clock to 12hour clock
-    if(hours > 12) {
+    if( hourInitial > 12) {
+      setHours(new Date().getHours())
       setHours(prevHour => prevHour - 12)
+      setHours(prevHour => prevHour < 10 ? "0" + prevHour : prevHour)
+    } else {
+      setHours(prevHour => prevHour < 10 ? "0" + prevHour : prevHour)
     }
     // add zero before single digit number
-    setHours(prevHour => prevHour < 10 ? "0" + prevHour : prevHour)
+    //setHours(prevHour => prevHour < 10 ? "0" + prevHour : prevHour)
     setMinutes(prevMinutes => prevMinutes < 10 ? "0" + prevMinutes : prevMinutes)
     setSeconds(prevSeconds => prevSeconds < 10 ? "0" + prevSeconds : prevSeconds)
-
-    if(hours === 0) {
-      //this is when a new day starts
-      setHours(12)
-    }
-  }
-  setInterval(() => {
-    updateTime()
     
   }, 1000);
   return (
